@@ -1,4 +1,4 @@
-FROM spark:python3
+FROM python:3.9-slim
 WORKDIR /app
 COPY spark_job.py .
 COPY requirements.txt requirements.txt
