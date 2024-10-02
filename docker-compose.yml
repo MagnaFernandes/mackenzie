@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "faker-data:1:1" # topic, partitions, replicas
+  producer:
+    build: ./producer
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    command: python producer.py
+  consumer:
+    build: ./consumer
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      MONGO_CONNECTION_STRING: mongodb://mongodb:27017
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodb_init:/docker-entrypoint-initdb.d
+  spark-job:
+    build: ./spark-job
+    depends_on:
+      - mongodb
+    volumes:
+      - ./spark-job:/app
+    entrypoint: /bin/sh -c "while true; do python spark_job.py; sleep 300; done" # Run every 5 minutes (300 seconds)
+  # Grafana (Optional -  Add Grafana service configuration here)
