@@ -2,6 +2,7 @@ import json
 import time
 from kafka import KafkaProducer
 from faker import Faker
+import random
 
 fake = Faker()
 bootstrap_servers = ['kafka:9092']
