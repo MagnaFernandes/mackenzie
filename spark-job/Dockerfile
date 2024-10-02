@@ -1,4 +1,4 @@
-FROM spark:3.3.0-hadoop3.2 
+FROM spark:python3
 WORKDIR /app
 COPY spark_job.py .
 COPY requirements.txt requirements.txt
