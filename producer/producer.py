@@ -6,6 +6,7 @@ from faker import Faker
 fake = Faker()
 bootstrap_servers = ['kafka:9092']
 topicName = 'faker-data'
+time.sleep(10)
 
 producer = KafkaProducer(bootstrap_servers=bootstrap_servers,
                          value_serializer=lambda v: json.dumps(v).encode('utf-8'))
