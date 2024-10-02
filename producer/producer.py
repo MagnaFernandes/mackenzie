@@ -41,8 +41,11 @@ def generate_synthetic_data(num_records):
         "prevalence_asd_ci": prevalence_asd_ci,
         "map_category": map_category
     }
-    return data
-
+    
     producer.send(topicName, value=data)
     print(f"Sent data: {data}")
     time.sleep(30)
+
+    return data
+
+    
