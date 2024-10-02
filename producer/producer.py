@@ -44,4 +44,5 @@ def generate_synthetic_data(num_records):
 
     producer.send(topicName, value=data)
     print(f"Sent data: {data}")
-    time.sleep(1)
+    time.sleep(30)
+    
