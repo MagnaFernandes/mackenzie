@@ -26,11 +26,11 @@ def generate_synthetic_data(num_records):
         prevalence_asd_ci = f"{round(prevalence_asd, 1)} ({lower_ci}-{upper_ci})"
 
         if prevalence_asd < 0.01:
-        map_category = "<1%"
+            map_category = "<1%"
         elif prevalence_asd < 0.05:
-        map_category = "1-5%"
+            map_category = "1-5%"
         else:
-        map_category = ">5%"
+            map_category = ">5%"
 
         data = {
             "fips_county": fips_county,
